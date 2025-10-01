@@ -2,3 +2,6 @@ venv
 output
 main.py
 .idea
+
+dist
+*.egg-info

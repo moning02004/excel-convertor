@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "xlsx-creator"
-version = "0.1.0"
+version = "0.2.0"
 description = "json 기반 엑셀 생성기"
 authors = [
   { name="Yu Jeonghoon", email="jeonghoon@jnghn.xyz" }
@@ -19,3 +19,6 @@ dependencies = [
 [project.urls]
 "Homepage" = "https://github.com/moning02004/xlsx-creator"
 "Bug Tracker" = "https://github.com/moning02004/xlsx-creator/issues"
+
+[tool.setuptools.packages.find]
+where = ["src"]
