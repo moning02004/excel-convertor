@@ -4,16 +4,16 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "xlsx-creator"
-version = "0.2.0"
-description = "json 기반 엑셀 생성기"
+version = "1.0.0"
+description = "엑셀 생성기 from dictionary"
 authors = [
-  { name="Yu Jeonghoon", email="jeonghoon@jnghn.xyz" }
+    { name = "Yu Jeonghoon", email = "jeonghoon@jnghn.xyz" }
 ]
 license = { file = "LICENSE" }
 readme = "README.md"
 requires-python = ">=3.8"
 dependencies = [
-  "XlsxWriter>=3.0.0"
+    "XlsxWriter>=3.0.0"
 ]
 
 [project.urls]
