@@ -63,6 +63,8 @@ class ExcelConvertor:
 
     @header.setter
     def header(self, value):
+        if not isinstance(value, dict):
+            raise ValueError("header 는 dict 형태여야 합니다.")
         self.__header = value
 
     @property
@@ -71,6 +73,8 @@ class ExcelConvertor:
 
     @body.setter
     def body(self, value):
+        if not isinstance(value, list):
+            raise ValueError("body 는 list 형태여야 합니다.")
         self.__body = list(self.get_excel_row(body=value))
 
     @property
@@ -79,6 +83,8 @@ class ExcelConvertor:
 
     @cell_styles.setter
     def cell_styles(self, value):
+        if not isinstance(value, dict):
+            raise ValueError("cell_styles 는 dict 형태여야 합니다.")
         self.__cell_styles = self.get_cell_styles(value)
 
     @property
@@ -87,6 +93,8 @@ class ExcelConvertor:
 
     @cell_comments.setter
     def cell_comments(self, value):
+        if not isinstance(value, dict):
+            raise ValueError("cell_comments 는 dict 형태여야 합니다.")
         self.__cell_comments = self.get_cell_comments(value)
 
     def save(self):
@@ -152,10 +160,10 @@ class ExcelConvertor:
 
         header_keys = list(self.header.keys())
         cell_styles = {header_keys.index(key): self.workbook.add_format(style)
-                       for key, style in cell_styles.items()}
+                       for key, style in cell_styles.items() if key in header_keys}
         return cell_styles
 
     def get_cell_comments(self, comments):
         header_keys = list(self.header.keys())
-        cell_comments = {header_keys.index(key): comment for key, comment in comments.items()}
+        cell_comments = {header_keys.index(key): comment for key, comment in comments.items() if key in header_keys}
         return cell_comments
