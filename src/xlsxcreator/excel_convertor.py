@@ -2,12 +2,22 @@ import os
 from collections import deque, defaultdict
 from datetime import datetime
 
+import unicodedata
 import xlsxwriter
 from xlsxwriter.utility import xl_col_to_name
 
 
+def get_display_width(text):
+    width = []
+    for ch in str(text):
+        if unicodedata.east_asian_width(ch) in ('F', 'W'):
+            width.append(1.3)
+        else:
+            width.append(1)
+    return sum(width)
+
+
 class ExcelConvertor:
-    column_widths = {}
     __header_style = {
         "bold": False,
         "font_name": "Arial",
@@ -17,7 +27,7 @@ class ExcelConvertor:
         'bg_color': '#C6EFCE'
     }
 
-    def __init__(self, save_to, is_header_filter=False):
+    def __init__(self, save_to, is_header_filter=True):
         self.__header = dict()
         self.__body = list()
         self.__cell_styles = dict()
@@ -83,11 +93,11 @@ class ExcelConvertor:
         max_widths = {}
         for row_index, row in enumerate(self.body):
             for col_index, cell_value in enumerate(row.split(",")):
-                cell_length = len(str(cell_value))
+                cell_length = get_display_width(cell_value)
                 if col_index not in max_widths or cell_length > max_widths[col_index]:
                     max_widths[col_index] = cell_length
         for col_index, width in max_widths.items():
-            self.worksheet.set_column(col_index, col_index, self.column_widths.get(col_index, width + 2))
+            self.worksheet.set_column(col_index, col_index, width)
 
         header_format = self.workbook.add_format(self.header_style)
         default_integer_cell_format = self.workbook.add_format({'font_size': 10,
@@ -121,7 +131,7 @@ class ExcelConvertor:
             self.worksheet.autofilter(filter_range)
 
         for col_index, width in max_widths.items():
-            adjusted_width = self.column_widths.get(col_index, width + 2) + (width * 0.5)
+            adjusted_width = width * 1.3
             self.worksheet.set_column(col_index, col_index, adjusted_width)
 
         self.worksheet.freeze_panes(1, 0)

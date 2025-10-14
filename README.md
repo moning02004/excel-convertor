@@ -9,6 +9,7 @@ pip install xlsx-creator
 
 ### 사용법
 - header 의 key 를 기준으로 데이터를 가공하여 엑셀로 저장합니다. `save_to` 를 string 으로 지정하면 `./output` 디렉터리 아래 파일이 저장됩니다.
+- 셀 너비는 텍스트 길이에 따라 자동으로 늘어나지만, 완벽하게 최적으로 설정되지는 않습니다. 따라서 엑셀의 자동 조정기능을 통해 너비를 조정해야 합니다.
 
 ```python
 from xlsxcreator.excel_convertor import ExcelConvertor
