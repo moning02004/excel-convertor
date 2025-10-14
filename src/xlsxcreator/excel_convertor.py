@@ -101,7 +101,7 @@ class ExcelConvertor:
         max_widths = {}
         for row_index, row in enumerate(self.body):
             for col_index, cell_value in enumerate(row.split(",")):
-                cell_length = get_display_width(cell_value)
+                cell_length = max(get_display_width(cell_value), 6)
                 if col_index not in max_widths or cell_length > max_widths[col_index]:
                     max_widths[col_index] = cell_length
         for col_index, width in max_widths.items():
