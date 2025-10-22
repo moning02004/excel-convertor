@@ -27,7 +27,7 @@ class ExcelConvertor:
         'bg_color': '#C6EFCE'
     }
 
-    def __init__(self, save_to, is_header_filter=True):
+    def __init__(self, save_to, is_header_filter=True, options=None):
         self.__header = dict()
         self.__body = list()
         self.__cell_styles = dict()
@@ -50,6 +50,10 @@ class ExcelConvertor:
         self.workbook = None
         self.worksheet = None
         self._opened = False
+
+        self.options = options or {
+            "in_memory": True
+        }
 
     @property
     def header_style(self):
@@ -179,7 +183,7 @@ class ExcelConvertor:
 
     def open(self):
         if not self._opened:
-            self.workbook = xlsxwriter.Workbook(self.save_to, {'in_memory': True})
+            self.workbook = xlsxwriter.Workbook(self.save_to, options=self.options)
             self._opened = True
         return self
 
