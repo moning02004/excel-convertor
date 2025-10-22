@@ -46,8 +46,10 @@ class ExcelConvertor:
                 save_to = f"{default_dirname}/{save_to}"
             os.makedirs(os.path.dirname(save_to), exist_ok=True)
 
-        self.workbook = xlsxwriter.Workbook(save_to, {'in_memory': True})
+        self.save_to = save_to
+        self.workbook = None
         self.worksheet = None
+        self._opened = False
 
     @property
     def header_style(self):
@@ -96,6 +98,12 @@ class ExcelConvertor:
         if not isinstance(value, dict):
             raise ValueError("cell_comments 는 dict 형태여야 합니다.")
         self.__cell_comments = self.get_cell_comments(value)
+
+    def __enter__(self):
+        return self.open()
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.close()
 
     def write_sheet(self, sheet_name=None):
         self.worksheet = self.workbook.add_worksheet(name=sheet_name)
@@ -169,5 +177,13 @@ class ExcelConvertor:
         cell_comments = {header_keys.index(key): comment for key, comment in comments.items() if key in header_keys}
         return cell_comments
 
+    def open(self):
+        if not self._opened:
+            self.workbook = xlsxwriter.Workbook(self.save_to, {'in_memory': True})
+            self._opened = True
+        return self
+
     def close(self):
-        self.workbook.close()
+        if self._opened:
+            self.workbook.close()
+            self._opened = False
