@@ -47,7 +47,7 @@ class ExcelConvertor:
             os.makedirs(os.path.dirname(save_to), exist_ok=True)
 
         self.workbook = xlsxwriter.Workbook(save_to, {'in_memory': True})
-        self.worksheet = self.workbook.add_worksheet()
+        self.worksheet = None
 
     @property
     def header_style(self):
@@ -97,7 +97,9 @@ class ExcelConvertor:
             raise ValueError("cell_comments 는 dict 형태여야 합니다.")
         self.__cell_comments = self.get_cell_comments(value)
 
-    def save(self):
+    def write_sheet(self, sheet_name=None):
+        self.worksheet = self.workbook.add_worksheet(name=sheet_name)
+
         max_widths = {}
         for row_index, row in enumerate(self.body):
             for col_index, cell_value in enumerate(row.split(",")):
@@ -143,7 +145,6 @@ class ExcelConvertor:
             self.worksheet.set_column(col_index, col_index, adjusted_width)
 
         self.worksheet.freeze_panes(1, 0)
-        self.workbook.close()
 
     def get_excel_row(self, body, blank="-"):
         body = deque(body)
@@ -167,3 +168,6 @@ class ExcelConvertor:
         header_keys = list(self.header.keys())
         cell_comments = {header_keys.index(key): comment for key, comment in comments.items() if key in header_keys}
         return cell_comments
+
+    def close(self):
+        self.workbook.close()

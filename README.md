@@ -26,7 +26,8 @@ if __name__ == '__main__':
     for x in range(1, 100):
         excel_body.append({"이름": f"홍길동{x}", "휴대폰": f"0101234567{x:02d}", "가입일": "2025-01-01"})
     convertor.body = excel_body
-    convertor.save()
+    convertor.write_sheet("sheet name")
+    convertor.close()
 ```
 
 - 버퍼에 저장하여 다운로드 기능을 제공하거나 파일 업로드 등 다양하게 활용할 수도 있습니다.
@@ -49,7 +50,8 @@ if __name__ == '__main__':
     for x in range(1, 100):
         excel_body.append({"이름": f"홍길동{x}", "휴대폰": f"0101234567{x:02d}", "가입일": "2025-01-01"})
     convertor.body = excel_body
-    convertor.save()
+    convertor.write_sheet()
+    convertor.close()
 
     # 다운로드 응답
     response = HttpResponse(
