@@ -3,7 +3,7 @@ requires = ["setuptools>=61.0"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "xlsx-creator"
+name = "excel-convertor"
 version = "1.4.0"
 description = "엑셀 생성기 from dictionary"
 authors = [
@@ -15,10 +15,11 @@ requires-python = ">=3.8"
 dependencies = [
     "XlsxWriter>=3.0.0"
 ]
+keywords = ["excel", "xlsx", "dict", "json", "python"]
 
 [project.urls]
-"Homepage" = "https://github.com/moning02004/xlsx-creator"
-"Bug Tracker" = "https://github.com/moning02004/xlsx-creator/issues"
+"Homepage" = "https://github.com/moning02004/excel-convertor"
+"Bug Tracker" = "https://github.com/moning02004/excel-convertor/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
