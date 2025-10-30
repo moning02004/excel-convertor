@@ -4,7 +4,7 @@ xlsxwriter 를 이용하여 엑셀을 보다 쉽게 작성할 수 있도록 도�
 
 ### 설치
 ```bash
-pip install xlsx-creator
+pip install excel-convertor
 ```
 
 ### 사용법
