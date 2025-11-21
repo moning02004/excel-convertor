@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "excel-convertor"
-version = "1.4.3"
+version = "1.4.5"
 description = "엑셀 생성기 from dictionary"
 authors = [
     { name = "Yu Jeonghoon", email = "jeonghoon@jnghn.xyz" }
